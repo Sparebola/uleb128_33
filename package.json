@@ -20,7 +20,7 @@
     "encode"
   ],
   "author": "Sparebola",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Sparebola/uleb128_33/issues"
   },
