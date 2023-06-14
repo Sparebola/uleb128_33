@@ -32,12 +32,12 @@ test("readUleb128_33", () => {
   const dataTwo = readUleb128_33(uintArray.subarray(dataOne.length));
 
   expect(dataOne).toStrictEqual({
-    isNumberBit: 0,
+    isMark: 0,
     value: "134678021",
     length: 5,
   });
   expect(dataTwo).toStrictEqual({
-    isNumberBit: 1,
+    isMark: 1,
     value: "134678012312321888",
     length: 9,
   });
