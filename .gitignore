@@ -1,3 +1,4 @@
 node_modules/
 src/test/js/
 uleb128_33.code-workspace
+package-lock.json

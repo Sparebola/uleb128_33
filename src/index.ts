@@ -30,7 +30,7 @@ const read = (buffer: Uint8Array, value: bigInt.BigInteger, bitshift = 0) => {
     // eslint-disable-next-line no-param-reassign
     value = value.or(byte.and(0x7f).shiftLeft(bitShift));
   } while (byte.greaterOrEquals(0x80));
-  return { value: value.toString(), length: i };
+  return { value: value.toJSNumber(), length: i };
 };
 
 export const readUleb128 = (buffer: Uint8Array) => {
@@ -40,7 +40,7 @@ export const readUleb128 = (buffer: Uint8Array) => {
     return read(buffer, value.and(0x7f));
   }
 
-  return { value: value.toString(), length: 1 };
+  return { value: value.toJSNumber(), length: 1 };
 };
 
 // eslint-disable-next-line camelcase
@@ -51,7 +51,7 @@ export const readUleb128_33 = (buffer: Uint8Array) => {
 
   if (value.greaterOrEquals(0x40)) {
     const result = read(buffer, value.and(0x3f), -1) as {
-      value: string;
+      value: number;
       length: number;
       isMark: number;
     }; // extend type
@@ -61,7 +61,7 @@ export const readUleb128_33 = (buffer: Uint8Array) => {
 
   return {
     isMark,
-    value: value.toString(),
+    value: value.toJSNumber(),
     length: 1,
   };
 };

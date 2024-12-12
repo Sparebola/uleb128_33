@@ -20,8 +20,8 @@ test("readUleb128", () => {
   const dataOne = readUleb128(uintArray);
   const dataTwo = readUleb128(uintArray.subarray(dataOne.length));
 
-  expect(dataOne).toStrictEqual({ length: 4, value: "10568325" });
-  expect(dataTwo).toStrictEqual({ length: 7, value: "105683251231231" });
+  expect(dataOne).toStrictEqual({ length: 4, value: 10568325 });
+  expect(dataTwo).toStrictEqual({ length: 7, value: 105683251231231 });
 });
 
 test("readUleb128_33", () => {
@@ -33,12 +33,12 @@ test("readUleb128_33", () => {
 
   expect(dataOne).toStrictEqual({
     isMark: 0,
-    value: "134678021",
+    value: 134678021,
     length: 5,
   });
   expect(dataTwo).toStrictEqual({
     isMark: 1,
-    value: "134678012312321888",
+    value: 134678012312321888,
     length: 9,
   });
 });
@@ -55,7 +55,7 @@ test("writeUleb128", () => {
 });
 
 test("writeUleb128 string", () => {
-  const dataOne = writeUleb128("10568325");
+  const dataOne = writeUleb128(10568325);
   const dataTwo = writeUleb128("105683251231231123123123");
 
   expect(dataOne).toStrictEqual([133, 133, 133, 5]);
