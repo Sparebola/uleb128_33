@@ -1,9 +1,9 @@
 export declare const readUleb128: (buffer: Uint8Array) => {
-    value: string;
+    value: number;
     length: number;
 };
 export declare const readUleb128_33: (buffer: Uint8Array) => {
-    value: string;
+    value: number;
     length: number;
     isMark: number;
 };

@@ -31,14 +31,14 @@ const read = (buffer, value, bitshift = 0) => {
         // eslint-disable-next-line no-param-reassign
         value = value.or(byte.and(0x7f).shiftLeft(bitShift));
     } while (byte.greaterOrEquals(0x80));
-    return { value: value.toString(), length: i };
+    return { value: value.toJSNumber(), length: i };
 };
 const readUleb128 = (buffer) => {
     const value = (0, big_integer_1.default)(buffer[0]);
     if (value.greaterOrEquals(0x80)) {
         return read(buffer, value.and(0x7f));
     }
-    return { value: value.toString(), length: 1 };
+    return { value: value.toJSNumber(), length: 1 };
 };
 exports.readUleb128 = readUleb128;
 // eslint-disable-next-line camelcase
@@ -53,7 +53,7 @@ const readUleb128_33 = (buffer) => {
     }
     return {
         isMark,
-        value: value.toString(),
+        value: value.toJSNumber(),
         length: 1,
     };
 };
