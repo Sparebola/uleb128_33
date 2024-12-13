@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import bigInt from "big-integer";
 
 const write = (arr: number[], integer: bigInt.BigInteger) => {
@@ -43,7 +44,6 @@ export const readUleb128 = (buffer: Uint8Array) => {
   return { value: value.toJSNumber(), length: 1 };
 };
 
-// eslint-disable-next-line camelcase
 export const readUleb128_33 = (buffer: Uint8Array) => {
   const firstByte = bigInt(buffer[0]);
   const isMark = firstByte.and(0x1).toJSNumber();
@@ -71,7 +71,6 @@ export const writeUleb128 = (integer: number | string) => {
   return write(result, bigInt(integer as number));
 };
 
-// eslint-disable-next-line camelcase
 export const writeUleb128_33 = (integer: number | string, isMark?: boolean) => {
   let integerB = bigInt(integer as number);
   if (isMark === undefined) {
@@ -102,7 +101,6 @@ export const getUleb128Length = (integer: number | string) => {
   return result;
 };
 
-// eslint-disable-next-line camelcase
 export const getUleb128_33Length = (integer: number | string) => {
   let result = 1;
   let integerB = bigInt(integer as number);
@@ -113,4 +111,13 @@ export const getUleb128_33Length = (integer: number | string) => {
     result += 1;
   }
   return result;
+};
+
+export default {
+  getUleb128Length,
+  getUleb128_33Length,
+  readUleb128,
+  readUleb128_33,
+  writeUleb128,
+  writeUleb128_33,
 };

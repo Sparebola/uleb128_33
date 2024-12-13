@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUleb128_33Length = exports.getUleb128Length = exports.writeUleb128_33 = exports.writeUleb128 = exports.readUleb128_33 = exports.readUleb128 = void 0;
+/* eslint-disable camelcase */
 const big_integer_1 = __importDefault(require("big-integer"));
 const write = (arr, integer) => {
     // eslint-disable-next-line no-constant-condition
@@ -41,7 +42,6 @@ const readUleb128 = (buffer) => {
     return { value: value.toJSNumber(), length: 1 };
 };
 exports.readUleb128 = readUleb128;
-// eslint-disable-next-line camelcase
 const readUleb128_33 = (buffer) => {
     const firstByte = (0, big_integer_1.default)(buffer[0]);
     const isMark = firstByte.and(0x1).toJSNumber();
@@ -63,7 +63,6 @@ const writeUleb128 = (integer) => {
     return write(result, (0, big_integer_1.default)(integer));
 };
 exports.writeUleb128 = writeUleb128;
-// eslint-disable-next-line camelcase
 const writeUleb128_33 = (integer, isMark) => {
     let integerB = (0, big_integer_1.default)(integer);
     if (isMark === undefined) {
@@ -91,7 +90,6 @@ const getUleb128Length = (integer) => {
     return result;
 };
 exports.getUleb128Length = getUleb128Length;
-// eslint-disable-next-line camelcase
 const getUleb128_33Length = (integer) => {
     let result = 1;
     let integerB = (0, big_integer_1.default)(integer);
@@ -103,4 +101,12 @@ const getUleb128_33Length = (integer) => {
     return result;
 };
 exports.getUleb128_33Length = getUleb128_33Length;
+exports.default = {
+    getUleb128Length: exports.getUleb128Length,
+    getUleb128_33Length: exports.getUleb128_33Length,
+    readUleb128: exports.readUleb128,
+    readUleb128_33: exports.readUleb128_33,
+    writeUleb128: exports.writeUleb128,
+    writeUleb128_33: exports.writeUleb128_33,
+};
 //# sourceMappingURL=index.js.map

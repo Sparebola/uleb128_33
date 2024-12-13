@@ -1,17 +1,14 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable camelcase */
 import { expect, test } from "@jest/globals";
 
 import {
   getUleb128Length,
-  // eslint-disable-next-line camelcase
   getUleb128_33Length,
   readUleb128,
-  // eslint-disable-next-line camelcase
   readUleb128_33,
   writeUleb128,
-  // eslint-disable-next-line camelcase
   writeUleb128_33,
-} from "..";
+} from "../src";
 
 test("readUleb128", () => {
   const uintArray = new Uint8Array([
