@@ -14,7 +14,7 @@ npm install uleb128_33
 
 ```javascript
 const readUleb128: (buffer: Uint8Array) => {
-    value: string;
+    value: number;
     length: number;
 };
 ```
@@ -23,7 +23,7 @@ const readUleb128: (buffer: Uint8Array) => {
 
 ```javascript
 const readUleb128_33: (buffer: Uint8Array) => {
-    value: string;
+    value: number;
     length: number;
     isMark: number;
 };
@@ -94,8 +94,8 @@ const uintArray = new Uint8Array([
 ]);
 const dataOne = readUleb128(uintArray);
 const dataTwo = readUleb128(uintArray.subarray(dataOne.length));
-console.log(dataOne); // { length: 4, value: "10568325" }
-console.log(dataTwo); // { length: 7, value: "105683251231231" }
+console.log(dataOne); // { length: 4, value: 10568325 }
+console.log(dataTwo); // { length: 7, value: 105683251231231 }
 ```
 
 #### readUleb128_33
@@ -106,8 +106,8 @@ const uintArray = new Uint8Array([
 ]);
 const dataOne = readUleb128_33(uintArray);
 const dataTwo = readUleb128_33(uintArray.subarray(dataOne.length));
-console.log(dataOne); // { isMark: 0, value: "134678021", length: 5 }
-console.log(dataTwo); // { isMark: 1, value: "134678012312321888", length: 9 }
+console.log(dataOne); // { isMark: 0, value: 134678021, length: 5 }
+console.log(dataTwo); // { isMark: 1, value: 134678012312321888, length: 9 }
 ```
 
 #### writeUleb128_33
