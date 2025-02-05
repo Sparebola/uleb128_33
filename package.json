@@ -1,6 +1,6 @@
 {
   "name": "uleb128_33",
-  "version": "1.2.2",
+  "version": "1.3.2",
   "description": "Encoding and decoding large numbers (uleb128 and uleb128_33)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

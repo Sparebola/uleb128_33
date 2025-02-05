@@ -21,6 +21,26 @@ test("readUleb128", () => {
   expect(dataTwo).toStrictEqual({ length: 7, value: 105683251231231 });
 });
 
+test("readUleb128 empty", () => {
+  const dataOne = readUleb128([]);
+  expect(dataOne).toStrictEqual({ length: 0, value: 0 });
+});
+
+test("readUleb128_33 empty", () => {
+  const dataOne = readUleb128_33([]);
+  expect(dataOne).toStrictEqual({ length: 0, value: 0, isMark: 0 });
+});
+
+test("readUleb128 index", () => {
+  const dataOne = readUleb128([11, 112, 184, 124, 0, 59], 2);
+  expect(dataOne).toStrictEqual({ length: 4, value: 15928 });
+});
+
+test("readUleb128_33 index", () => {
+  const dataOne = readUleb128_33([11, 112, 184, 124, 0, 59], 4);
+  expect(dataOne).toStrictEqual({ length: 1, value: 0, isMark: 0 });
+});
+
 test("readUleb128_33", () => {
   const uintArray = [
     138, 152, 184, 128, 1, 193, 253, 243, 174, 137, 188, 188, 222, 3,

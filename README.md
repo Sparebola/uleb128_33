@@ -10,19 +10,19 @@ npm install uleb128_33
 
 # Documentation
 
-#### `readUleb128`: Gets the ArrayLike parameter, returns the object
+#### `readUleb128`: Gets the ArrayLike parameter, returns the object. You can also specify an index from which to read in the buffer, the default is 0.
 
 ```javascript
-const readUleb128: (buffer: ArrayLike<number>) => {
+const readUleb128: (buffer: ArrayLike<number>, index?: number) => {
     value: number;
     length: number;
 };
 ```
 
-#### `readUleb128_33`: Gets the ArrayLike parameter, returns the object
+#### `readUleb128_33`: Gets the ArrayLike parameter, returns the object. You can also specify an index from which to read in the buffer, the default is 0.
 
 ```javascript
-const readUleb128_33: (buffer: ArrayLike<number>) => {
+const readUleb128_33: (buffer: ArrayLike<number>, index?: number) => {
     value: number;
     length: number;
     isMark: number;

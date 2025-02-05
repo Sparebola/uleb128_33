@@ -21,9 +21,10 @@ const write = (arr: number[], integer: bigInt.BigInteger) => {
 const read = (
   buffer: ArrayLike<number>,
   value: bigInt.BigInteger,
+  index: number,
   bitshift = 0
 ) => {
-  let i = 1;
+  let i = index;
   let bitShift = bitshift;
   let byte;
 
@@ -38,23 +39,25 @@ const read = (
   return { value: value.toJSNumber(), length: i };
 };
 
-export const readUleb128 = (buffer: ArrayLike<number>) => {
-  const value = bigInt(buffer[0]);
+export const readUleb128 = (buffer: ArrayLike<number>, index = 0) => {
+  if (buffer.length === 0) return { value: 0, length: 0 };
+  const value = bigInt(buffer[index]);
 
   if (value.greaterOrEquals(0x80)) {
-    return read(buffer, value.and(0x7f));
+    return read(buffer, value.and(0x7f), index + 1);
   }
 
   return { value: value.toJSNumber(), length: 1 };
 };
 
-export const readUleb128_33 = (buffer: ArrayLike<number>) => {
-  const firstByte = bigInt(buffer[0]);
+export const readUleb128_33 = (buffer: ArrayLike<number>, index = 0) => {
+  if (buffer.length === 0) return { value: 0, length: 0, isMark: 0 };
+  const firstByte = bigInt(buffer[index]);
   const isMark = firstByte.and(0x1).toJSNumber();
   const value = firstByte.shiftRight(1);
 
   if (value.greaterOrEquals(0x40)) {
-    const result = read(buffer, value.and(0x3f), -1) as {
+    const result = read(buffer, value.and(0x3f), index + 1, -1) as {
       value: number;
       length: number;
       isMark: number;

@@ -21,8 +21,8 @@ const write = (arr, integer) => {
     }
     return arr;
 };
-const read = (buffer, value, bitshift = 0) => {
-    let i = 1;
+const read = (buffer, value, index, bitshift = 0) => {
+    let i = index;
     let bitShift = bitshift;
     let byte;
     do {
@@ -34,20 +34,24 @@ const read = (buffer, value, bitshift = 0) => {
     } while (byte.greaterOrEquals(0x80));
     return { value: value.toJSNumber(), length: i };
 };
-const readUleb128 = (buffer) => {
-    const value = (0, big_integer_1.default)(buffer[0]);
+const readUleb128 = (buffer, index = 0) => {
+    if (buffer.length === 0)
+        return { value: 0, length: 0 };
+    const value = (0, big_integer_1.default)(buffer[index]);
     if (value.greaterOrEquals(0x80)) {
-        return read(buffer, value.and(0x7f));
+        return read(buffer, value.and(0x7f), index + 1);
     }
     return { value: value.toJSNumber(), length: 1 };
 };
 exports.readUleb128 = readUleb128;
-const readUleb128_33 = (buffer) => {
-    const firstByte = (0, big_integer_1.default)(buffer[0]);
+const readUleb128_33 = (buffer, index = 0) => {
+    if (buffer.length === 0)
+        return { value: 0, length: 0, isMark: 0 };
+    const firstByte = (0, big_integer_1.default)(buffer[index]);
     const isMark = firstByte.and(0x1).toJSNumber();
     const value = firstByte.shiftRight(1);
     if (value.greaterOrEquals(0x40)) {
-        const result = read(buffer, value.and(0x3f), -1); // extend type
+        const result = read(buffer, value.and(0x3f), index + 1, -1); // extend type
         result.isMark = isMark;
         return result;
     }
