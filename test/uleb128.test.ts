@@ -22,11 +22,11 @@ test("readUleb128", () => {
 });
 
 test("readUleb128_33", () => {
-  const uintArray = new Uint8Array([
+  const uintArray = [
     138, 152, 184, 128, 1, 193, 253, 243, 174, 137, 188, 188, 222, 3,
-  ]);
+  ];
   const dataOne = readUleb128_33(uintArray);
-  const dataTwo = readUleb128_33(uintArray.subarray(dataOne.length));
+  const dataTwo = readUleb128_33(uintArray.slice(dataOne.length));
 
   expect(dataOne).toStrictEqual({
     isMark: 0,

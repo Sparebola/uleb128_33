@@ -10,19 +10,19 @@ npm install uleb128_33
 
 # Documentation
 
-#### `readUleb128`: Gets the Uint8Array parameter, returns the object
+#### `readUleb128`: Gets the ArrayLike parameter, returns the object
 
 ```javascript
-const readUleb128: (buffer: Uint8Array) => {
+const readUleb128: (buffer: ArrayLike<number>) => {
     value: number;
     length: number;
 };
 ```
 
-#### `readUleb128_33`: Gets the Uint8Array parameter, returns the object
+#### `readUleb128_33`: Gets the ArrayLike parameter, returns the object
 
 ```javascript
-const readUleb128_33: (buffer: Uint8Array) => {
+const readUleb128_33: (buffer: ArrayLike<number>) => {
     value: number;
     length: number;
     isMark: number;
@@ -101,11 +101,11 @@ console.log(dataTwo); // { length: 7, value: 105683251231231 }
 #### readUleb128_33
 
 ```javascript
-const uintArray = new Uint8Array([
+const uintArray = [
   138, 152, 184, 128, 1, 193, 253, 243, 174, 137, 188, 188, 222, 3,
-]);
+];
 const dataOne = readUleb128_33(uintArray);
-const dataTwo = readUleb128_33(uintArray.subarray(dataOne.length));
+const dataTwo = readUleb128_33(uintArray.slice(dataOne.length));
 console.log(dataOne); // { isMark: 0, value: 134678021, length: 5 }
 console.log(dataTwo); // { isMark: 1, value: 134678012312321888, length: 9 }
 ```

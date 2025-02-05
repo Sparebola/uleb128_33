@@ -18,7 +18,11 @@ const write = (arr: number[], integer: bigInt.BigInteger) => {
   return arr;
 };
 
-const read = (buffer: Uint8Array, value: bigInt.BigInteger, bitshift = 0) => {
+const read = (
+  buffer: ArrayLike<number>,
+  value: bigInt.BigInteger,
+  bitshift = 0
+) => {
   let i = 1;
   let bitShift = bitshift;
   let byte;
@@ -34,7 +38,7 @@ const read = (buffer: Uint8Array, value: bigInt.BigInteger, bitshift = 0) => {
   return { value: value.toJSNumber(), length: i };
 };
 
-export const readUleb128 = (buffer: Uint8Array) => {
+export const readUleb128 = (buffer: ArrayLike<number>) => {
   const value = bigInt(buffer[0]);
 
   if (value.greaterOrEquals(0x80)) {
@@ -44,7 +48,7 @@ export const readUleb128 = (buffer: Uint8Array) => {
   return { value: value.toJSNumber(), length: 1 };
 };
 
-export const readUleb128_33 = (buffer: Uint8Array) => {
+export const readUleb128_33 = (buffer: ArrayLike<number>) => {
   const firstByte = bigInt(buffer[0]);
   const isMark = firstByte.and(0x1).toJSNumber();
   const value = firstByte.shiftRight(1);
