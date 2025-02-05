@@ -32,7 +32,7 @@ const read = (buffer, value, index, bitshift = 0) => {
         // eslint-disable-next-line no-param-reassign
         value = value.or(byte.and(0x7f).shiftLeft(bitShift));
     } while (byte.greaterOrEquals(0x80));
-    return { value: value.toJSNumber(), length: i };
+    return { value: value.toJSNumber(), length: i - index + 1 };
 };
 const readUleb128 = (buffer, index = 0) => {
     if (buffer.length === 0)
