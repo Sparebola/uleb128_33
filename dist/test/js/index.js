@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUleb128_33Length = exports.getUleb128Length = exports.writeUleb128_33 = exports.writeUleb128 = exports.readUleb128_33 = exports.readUleb128 = void 0;
-/* eslint-disable camelcase */
 const big_integer_1 = __importDefault(require("big-integer"));
 const write = (arr, integer) => {
     // eslint-disable-next-line no-constant-condition
@@ -21,8 +20,8 @@ const write = (arr, integer) => {
     }
     return arr;
 };
-const read = (buffer, value, index, bitshift = 0) => {
-    let i = index;
+const read = (buffer, value, bitshift = 0) => {
+    let i = 1;
     let bitShift = bitshift;
     let byte;
     do {
@@ -32,26 +31,23 @@ const read = (buffer, value, index, bitshift = 0) => {
         // eslint-disable-next-line no-param-reassign
         value = value.or(byte.and(0x7f).shiftLeft(bitShift));
     } while (byte.greaterOrEquals(0x80));
-    return { value: value.toJSNumber(), length: i - index + 1 };
+    return { value: value.toJSNumber(), length: i };
 };
-const readUleb128 = (buffer, index = 0) => {
-    if (buffer.length === 0)
-        return { value: 0, length: 0 };
-    const value = (0, big_integer_1.default)(buffer[index]);
+const readUleb128 = (buffer) => {
+    const value = (0, big_integer_1.default)(buffer[0]);
     if (value.greaterOrEquals(0x80)) {
-        return read(buffer, value.and(0x7f), index + 1);
+        return read(buffer, value.and(0x7f));
     }
     return { value: value.toJSNumber(), length: 1 };
 };
 exports.readUleb128 = readUleb128;
-const readUleb128_33 = (buffer, index = 0) => {
-    if (buffer.length === 0)
-        return { value: 0, length: 0, isMark: 0 };
-    const firstByte = (0, big_integer_1.default)(buffer[index]);
+// eslint-disable-next-line camelcase
+const readUleb128_33 = (buffer) => {
+    const firstByte = (0, big_integer_1.default)(buffer[0]);
     const isMark = firstByte.and(0x1).toJSNumber();
     const value = firstByte.shiftRight(1);
     if (value.greaterOrEquals(0x40)) {
-        const result = read(buffer, value.and(0x3f), index + 1, -1); // extend type
+        const result = read(buffer, value.and(0x3f), -1); // extend type
         result.isMark = isMark;
         return result;
     }
@@ -67,18 +63,21 @@ const writeUleb128 = (integer) => {
     return write(result, (0, big_integer_1.default)(integer));
 };
 exports.writeUleb128 = writeUleb128;
+// eslint-disable-next-line camelcase
 const writeUleb128_33 = (integer, isMark) => {
     let integerB = (0, big_integer_1.default)(integer);
+    if (isMark === undefined) {
+        // eslint-disable-next-line no-bitwise, no-param-reassign
+        isMark = (integerB.toJSNumber() | 0) !== integerB.toJSNumber();
+    }
     const result = [];
     let byte = integerB.and(0x3f).shiftLeft(1).or(Number(isMark));
     integerB = integerB.shiftRight(6);
-    result.push(byte.or(integerB.isZero() ? 0 : 0x80).toJSNumber());
-    while (!integerB.isZero()) {
-        byte = integerB.and(0x7f);
-        integerB = integerB.shiftRight(7);
-        result.push(byte.or(integerB.isZero() ? 0 : 0x80).toJSNumber());
+    if (!integerB.isZero()) {
+        byte = byte.or(0x80);
     }
-    return result;
+    result.push(byte.toJSNumber());
+    return write(result, integerB);
 };
 exports.writeUleb128_33 = writeUleb128_33;
 const getUleb128Length = (integer) => {
@@ -92,6 +91,7 @@ const getUleb128Length = (integer) => {
     return result;
 };
 exports.getUleb128Length = getUleb128Length;
+// eslint-disable-next-line camelcase
 const getUleb128_33Length = (integer) => {
     let result = 1;
     let integerB = (0, big_integer_1.default)(integer);
@@ -103,12 +103,4 @@ const getUleb128_33Length = (integer) => {
     return result;
 };
 exports.getUleb128_33Length = getUleb128_33Length;
-exports.default = {
-    getUleb128Length: exports.getUleb128Length,
-    getUleb128_33Length: exports.getUleb128_33Length,
-    readUleb128: exports.readUleb128,
-    readUleb128_33: exports.readUleb128_33,
-    writeUleb128: exports.writeUleb128,
-    writeUleb128_33: exports.writeUleb128_33,
-};
 //# sourceMappingURL=index.js.map

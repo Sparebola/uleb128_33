@@ -78,22 +78,21 @@ export const writeUleb128 = (integer: number | string) => {
   return write(result, bigInt(integer as number));
 };
 
-export const writeUleb128_33 = (integer: number | string, isMark?: boolean) => {
+export const writeUleb128_33 = (integer: number | string, isMark: boolean) => {
   let integerB = bigInt(integer as number);
-  if (isMark === undefined) {
-    // eslint-disable-next-line no-bitwise, no-param-reassign
-    isMark = (integerB.toJSNumber() | 0) !== integerB.toJSNumber();
-  }
 
   const result: number[] = [];
   let byte = integerB.and(0x3f).shiftLeft(1).or(Number(isMark));
   integerB = integerB.shiftRight(6);
-  if (!integerB.isZero()) {
-    byte = byte.or(0x80);
-  }
-  result.push(byte.toJSNumber());
+  result.push(byte.or(integerB.isZero() ? 0 : 0x80).toJSNumber());
 
-  return write(result, integerB);
+  while (!integerB.isZero()) {
+    byte = integerB.and(0x7f);
+    integerB = integerB.shiftRight(7);
+    result.push(byte.or(integerB.isZero() ? 0 : 0x80).toJSNumber());
+  }
+
+  return result;
 };
 
 export const getUleb128Length = (integer: number | string) => {
